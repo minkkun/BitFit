@@ -6,36 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!--    BOTTOM NAV -->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listRV"
-        android:layout_width="419dp"
-        android:layout_height="542dp"
+    <FrameLayout
+        android:id="@+id/nutrition_frame_layout"
+        android:layout_width="395dp"
+        android:layout_height="717dp"
+        app:layout_constraintBottom_toTopOf="@+id/addNewFoodBtn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recordsTV" />
-
-    <TextView
-        android:id="@+id/recordsTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="10dp"
-        android:text="records"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+    </FrameLayout>
 
     <Button
         android:id="@+id/addNewFoodBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="20dp"
         android:text="Add new Food"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listRV" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_bottom_navigation"
+        tools:layout_editor_absoluteX="0dp">
+
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

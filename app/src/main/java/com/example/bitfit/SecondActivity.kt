@@ -23,16 +23,9 @@ class SecondActivity : AppCompatActivity() {
         val caloriesInput = findViewById<EditText>(R.id.caloriesInputET)
 
         addButton.setOnClickListener {
-//            val food = foodInput.text.toString()
-//            val calories = caloriesInput.text.toString()
-
-//            Log.e("2nd", food)
-//            Log.e("2nd", calories)
             val uid: Long = 0
             lifecycleScope.launch(IO) {
-//                val nutritionData = NutritionEntity(uid, food, calories)
                 (application as NutritionApplication).db.nutritionDao().insert(
-//                    nutritionData
                     NutritionEntity(
                         typeOfFood = foodInput.text.toString(),
                         amountOfCalories = caloriesInput.text.toString()
@@ -41,8 +34,6 @@ class SecondActivity : AppCompatActivity() {
             }
 
             val myIntent: Intent = Intent(this@SecondActivity, MainActivity::class.java)
-//            myIntent.putExtra("foodType", food)
-//            myIntent.putExtra("amountOfCalories", calories)
             startActivity(myIntent)
         }
     }

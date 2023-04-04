@@ -3,22 +3,11 @@ package com.example.bitfit
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.DocumentsContract.Root
-import android.util.Log
 import android.widget.Button
-import android.widget.TextView
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private val savedNutritionData = mutableListOf<NutritionData>()
@@ -27,31 +16,44 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        recy = findViewById(R.id.listRV)
-        val nutritionAdapter = NutritionAdapter(savedNutritionData)
-        recy.adapter = nutritionAdapter
-        recy.layoutManager = LinearLayoutManager(this)
+
+//        Add food button
         val addNewFood = findViewById<Button>(R.id.addNewFoodBtn)
         addNewFood.setOnClickListener {
             val intent: Intent = Intent(this@MainActivity, SecondActivity::class.java)
             startActivity(intent)
         }
 
-        lifecycleScope.launch {
-            (application as NutritionApplication).db.nutritionDao().getAll().collect { databaseList ->
-                databaseList.map { entity ->
-                    NutritionData(entity.typeOfFood, entity.amountOfCalories)
-                }.also { mappedList ->
-                    savedNutritionData.clear()
-                    savedNutritionData.addAll(mappedList)
-                    nutritionAdapter.notifyDataSetChanged()
-                }
+
+        val fragmentManager: FragmentManager = supportFragmentManager
+
+        // define your fragments here
+        val nutritionFragment: Fragment = NutritionFragment()
+        val dashboardFragment: Fragment = DashboardFragment()
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+
+        // handle navigation selection
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            lateinit var fragment: Fragment
+            when (item.itemId) {
+                R.id.dashboard_nav -> fragment = dashboardFragment
+                R.id.log_nav -> fragment = nutritionFragment
             }
+            replaceFragment(fragment)
+            true
         }
-            
 
-
+        // Set default selection
+        bottomNavigationView.selectedItemId = R.id.log_nav
         }
+
+    private fun replaceFragment(articleListFragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.nutrition_frame_layout, articleListFragment)
+        fragmentTransaction.commit()
+    }
+
     }
 
 

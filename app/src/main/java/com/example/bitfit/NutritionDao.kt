@@ -12,6 +12,15 @@ interface NutritionDao {
     @Query("SELECT * FROM nutrition_table")
     fun getAll(): Flow<List<NutritionEntity>>
 
+    @Query("SELECT AVG(calories) FROM nutrition_table")
+    fun getAvgCal(): Flow<Int>
+
+    @Query("SELECT MAX(calories) FROM nutrition_table")
+    fun getMaxCal(): Flow<Int>
+
+    @Query("SELECT MIN(calories) FROM nutrition_table")
+    fun getMinCal(): Flow<Int>
+
     @Insert
     fun insertAll(meals: List<NutritionEntity>)
 
