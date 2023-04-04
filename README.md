@@ -2,7 +2,7 @@
 
 Submitted by: **Minh Le**
 
-See README of Part 1: [https://github.com/minkkun/BitFit/blob/master/README%20Part%201.md](README Part 1.md)
+See README of Part 1: [a link](https://github.com/minkkun/BitFit/blob/master/README%20Part%201.md)
 
 **BitFit** is a health metrics app that allows users to track the food they have consume and compute some insights.
 
